@@ -4615,7 +4615,6 @@ function library:init()
 
 end
 
-
 function library:CreateSettingsTab(menu)
     local settingsTab = menu:AddTab('Settings', 999);
     local configSection = settingsTab:AddSection('Config', 2);
@@ -4677,9 +4676,12 @@ function library:CreateSettingsTab(menu)
         end
     end})
 
-  
     mainSection:AddButton({text = 'Rejoin Server', confirm = true, callback = function()
         game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, game.JobId);
+    end})
+
+    mainSection:AddButton({text = 'Copy Join Script', callback = function()
+        setclipboard(([[game:GetService("TeleportService"):TeleportToPlaceInstance(%s, "%s")]]):format(game.PlaceId, game.JobId))
     end})
 
     mainSection:AddButton({text = 'Unload', confirm = true, callback = function()
@@ -4730,3 +4732,6 @@ function library:CreateSettingsTab(menu)
 
     return settingsTab;
 end
+
+getgenv().library = library
+return library
